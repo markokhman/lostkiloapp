@@ -58,7 +58,7 @@ const LeaderboardPage = () => {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         
-        <div className="relative px-4 pt-20 pb-6 safe-area-pt">
+        <div className="relative px-4 pt-24 pb-6 safe-area-pt">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-amber-500/20 rounded-2xl backdrop-blur-sm border border-amber-500/30 animate-bounce">
               <Trophy size={32} className="text-amber-400" />
@@ -124,7 +124,7 @@ const LeaderboardPage = () => {
 
         {/* Top 10 */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-8">
              <Star size={20} className="text-amber-400 fill-amber-400" />
              <h2 className="text-lg font-semibold text-white">Топ участников</h2>
           </div>

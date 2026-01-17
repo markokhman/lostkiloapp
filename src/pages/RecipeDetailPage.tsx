@@ -37,7 +37,7 @@ const RecipeDetailPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-orange-600/20 to-red-600/20 px-4 pt-20 pb-8 safe-area-pt">
+      <div className="bg-gradient-to-r from-orange-600/20 to-red-600/20 px-4 pt-24 pb-8 safe-area-pt">
         <div className="flex items-center gap-3 mt-2">
           <span className="text-5xl">{recipe.emoji}</span>
           <div>

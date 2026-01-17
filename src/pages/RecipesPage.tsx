@@ -20,7 +20,7 @@ const RecipesPage = () => {
   return (
     <div className="min-h-screen bg-slate-900 pb-24">
       {/* Hero Header with Image */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-80 overflow-hidden">
         <img 
           src={foodImages.salmon}
           alt="Delicious food"

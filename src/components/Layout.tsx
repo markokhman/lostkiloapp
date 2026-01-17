@@ -50,7 +50,7 @@ const Layout = () => {
       
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-[#1c1c1d]/90 backdrop-blur-md border-t border-[#38383a] safe-area-pb z-50">
-        <div className="flex justify-around items-center pt-2 pb-1">
+        <div className="flex justify-around items-center pt-3 pb-5">
           {navItems.map(({ path, Icon, label }) => (
             <Link
               key={path}

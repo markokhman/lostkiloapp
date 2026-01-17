@@ -25,7 +25,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-slate-700/50 to-slate-600/30 px-4 pt-20 pb-8 safe-area-pt">
+      <div className="bg-gradient-to-r from-slate-700/50 to-slate-600/30 px-4 pt-24 pb-8 safe-area-pt">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
             {user?.firstName?.[0] || 'U'}
