@@ -8,9 +8,12 @@ export interface TelegramUser {
   languageCode?: string
 }
 
+// Get WebApp type from window.Telegram
+type TelegramWebApp = NonNullable<typeof window.Telegram>['WebApp']
+
 interface TelegramContextType {
   user: TelegramUser | null
-  webApp: typeof window.Telegram?.WebApp | null
+  webApp: TelegramWebApp | null
   isReady: boolean
   initData: string | null
 }
@@ -24,7 +27,7 @@ const TelegramContext = createContext<TelegramContextType>({
 
 export function TelegramProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<TelegramUser | null>(null)
-  const [webApp, setWebApp] = useState<typeof window.Telegram?.WebApp | null>(null)
+  const [webApp, setWebApp] = useState<TelegramWebApp | null>(null)
   const [isReady, setIsReady] = useState(false)
   const [initData, setInitData] = useState<string | null>(null)
 
