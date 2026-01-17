@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-slate-900 pb-24">
       {/* Hero Section with Image */}
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         <img 
           src={heroImages.healthy}
           alt="Healthy lifestyle"
@@ -36,10 +36,10 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/40 to-transparent" />
         
         {/* Decorative Icons instead of emojis */}
-        <div className="absolute top-4 right-4 text-emerald-400 opacity-60 animate-pulse">
+        <div className="absolute top-4 right-4 safe-area-pt text-emerald-400 opacity-60 animate-pulse">
            <Utensils size={32} />
         </div>
-        <div className="absolute top-12 right-16 text-teal-400 opacity-60 animate-pulse delay-700">
+        <div className="absolute top-12 right-16 safe-area-pt text-teal-400 opacity-60 animate-pulse delay-700">
            <Dumbbell size={28} />
         </div>
         

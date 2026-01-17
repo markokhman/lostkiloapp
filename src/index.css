@@ -30,7 +30,11 @@ body {
 
 /* Safe area for mobile devices */
 .safe-area-pb {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.safe-area-pt {
+  padding-top: max(env(safe-area-inset-top, 0px), 16px);
 }
 
 /* Custom scrollbar */
