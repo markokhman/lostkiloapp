@@ -24,11 +24,14 @@ export function transliterate(str: string): string {
 
 // Get storage filename from original filename
 export function getStorageFilename(originalFilename: string): string {
-  return transliterate(originalFilename)
+  // Normalize to NFD to match macOS filesystem behavior during upload
+  // This handles characters like 'й' correctly (becoming 'i_' instead of 'i' or 'y')
+  return transliterate(originalFilename.normalize('NFD'))
 }
 
 // Get thumbnail filename from video filename
 export function getThumbnailFilename(videoFilename: string): string {
   const thumbName = videoFilename.replace(/\.(mp4|MOV|mov|MP4)$/, '.jpg')
-  return transliterate(thumbName)
+  // Also normalize thumbnail names
+  return transliterate(thumbName.normalize('NFD'))
 }
