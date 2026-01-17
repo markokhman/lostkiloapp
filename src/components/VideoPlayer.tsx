@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { getVideoUrl, getThumbnailUrl } from '../lib/supabase'
+import { X, Play } from 'lucide-react'
 
 interface VideoPlayerProps {
   filename: string
@@ -47,42 +48,38 @@ const VideoPlayer = ({ filename, title, onClose }: VideoPlayerProps) => {
   // Thumbnail preview (not playing)
   if (!isPlaying) {
     return (
-      <div className="relative w-full bg-slate-900 rounded-xl overflow-visible">
+      <div className="relative w-full bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700/50">
         <div className="aspect-video">
           <button 
             onClick={handlePlay}
-            className="w-full h-full relative group rounded-xl overflow-hidden"
+            className="w-full h-full relative group"
           >
             {thumbUrl && !thumbError ? (
               <img 
                 src={thumbUrl} 
                 alt={title || filename}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={() => setThumbError(true)}
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900">
-                {/* Decorative pattern instead of emoji */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-slate-500 rounded-full" />
-                  <div className="absolute bottom-1/4 right-1/4 w-12 h-12 border-2 border-slate-500 rounded-lg rotate-45" />
+              <div className="w-full h-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 flex items-center justify-center">
+                <div className="text-slate-700">
+                   <Play size={48} className="opacity-20" />
                 </div>
               </div>
             )}
             
             {/* Play button overlay */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
-              <div className="w-16 h-16 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-xl transition-all group-hover:scale-110">
-                <svg className="w-8 h-8 text-slate-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-all">
+              <div className="w-14 h-14 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-xl backdrop-blur-sm transition-all group-hover:scale-110">
+                <Play size={24} className="text-slate-900 ml-1" fill="currentColor" />
               </div>
             </div>
 
             {/* Title overlay */}
             {title && (
               <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-sm font-medium">{title}</p>
+                <p className="text-white text-sm font-medium truncate">{title}</p>
               </div>
             )}
           </button>
@@ -93,55 +90,43 @@ const VideoPlayer = ({ filename, title, onClose }: VideoPlayerProps) => {
 
   // Fullscreen video player
   return (
-    <div className="fixed inset-0 z-50 bg-black flex flex-col">
-      {/* Video container */}
-      <div className="flex-1 flex items-center justify-center min-h-0">
-        {videoError ? (
-          <div className="text-center text-slate-400 p-8">
+    <div className="fixed inset-0 z-[100] bg-black">
+      {/* Close button overlay - always visible and accessible */}
+      <div className="absolute top-0 right-0 p-4 safe-area-pt z-[110]">
+        <button
+          onClick={handleClose}
+          className="w-10 h-10 flex items-center justify-center bg-black/50 backdrop-blur-md rounded-full text-white/90 hover:bg-black/70 hover:text-white transition-all border border-white/10"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      {videoError ? (
+        <div className="flex items-center justify-center h-full w-full">
+          <div className="text-center text-slate-400 p-8 max-w-sm">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 flex items-center justify-center">
-              <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
+              <X size={32} className="text-slate-500" />
             </div>
-            <p className="text-lg mb-2">Видео ещё не загружено</p>
-            <p className="text-sm text-slate-500 mb-6">
-              Большие файлы сжимаются для загрузки
+            <p className="text-lg font-medium text-white mb-2">Видео недоступно</p>
+            <p className="text-sm text-slate-500">
+              Возможно, файл еще загружается или произошла ошибка воспроизведения
             </p>
-            <button 
-              onClick={handleClose}
-              className="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl text-white transition-all"
-            >
-              Закрыть
-            </button>
           </div>
-        ) : (
+        </div>
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-black">
           <video
             ref={videoRef}
             src={videoUrl || ''}
             controls
             autoPlay
             playsInline
-            className="w-full h-full max-w-full max-h-full object-contain"
+            className="w-full h-full object-contain"
             onError={() => setVideoError(true)}
             poster={thumbUrl && !thumbError ? thumbUrl : undefined}
           >
             Ваш браузер не поддерживает видео
           </video>
-        )}
-      </div>
-
-      {/* Bottom close button */}
-      {!videoError && (
-        <div className="flex-shrink-0 p-4 pb-8 bg-gradient-to-t from-black to-transparent">
-          <button
-            onClick={handleClose}
-            className="w-full py-4 bg-slate-800/90 hover:bg-slate-700 rounded-2xl text-white font-medium transition-all flex items-center justify-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            Закрыть
-          </button>
         </div>
       )}
     </div>
