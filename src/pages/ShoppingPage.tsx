@@ -148,7 +148,7 @@ const ShoppingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-teal-600/20 to-emerald-600/20 px-4 pt-6 pb-8">
+      <div className="bg-gradient-to-r from-teal-600/20 to-emerald-600/20 px-4 pt-12 pb-8 safe-area-pt">
         <h1 className="text-2xl font-bold text-white mb-2">🛒 Список покупок</h1>
         <p className="text-teal-200/70 text-sm">
           Продукты и добавки на неделю курса
