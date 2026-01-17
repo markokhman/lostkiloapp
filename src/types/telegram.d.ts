@@ -5,6 +5,8 @@ interface TelegramWebApp {
   requestFullscreen: () => void
   exitFullscreen: () => void
   isFullscreen: boolean
+  disableVerticalSwipes: () => void // Added method
+  enableVerticalSwipes: () => void // Added method
   enableClosingConfirmation: () => void
   disableClosingConfirmation: () => void
   MainButton: {

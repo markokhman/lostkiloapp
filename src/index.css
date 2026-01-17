@@ -26,6 +26,11 @@ body {
   color: var(--tg-theme-text-color);
   min-height: 100vh;
   overflow-x: hidden;
+  overscroll-behavior-y: none; /* Prevent pull-to-refresh/close */
+}
+
+html {
+  overscroll-behavior-y: none; /* Prevent pull-to-refresh/close */
 }
 
 /* Safe area for mobile devices */

@@ -34,6 +34,12 @@ function App() {
       if ('requestFullscreen' in tg) {
         (tg as any).requestFullscreen()
       }
+      
+      // Disable vertical swipes to prevent accidental closing
+      if ('disableVerticalSwipes' in tg) {
+        (tg as any).disableVerticalSwipes()
+      }
+
       tg.enableClosingConfirmation()
       
       setWebApp(tg)
