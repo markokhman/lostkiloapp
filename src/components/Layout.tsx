@@ -1,7 +1,9 @@
-import { Outlet, Link, useLocation } from 'react-router-dom'
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Layout = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   
   const navItems = [
     { path: '/', icon: '🏠', label: 'Главная' },
@@ -10,6 +12,31 @@ const Layout = () => {
     { path: '/recipes', icon: '🍳', label: 'Рецепты' },
     { path: '/profile', icon: '👤', label: 'Профиль' }
   ]
+
+  // Main pages where BackButton should be hidden
+  const mainPages = ['/', '/days', '/recipes', '/leaderboard', '/profile', '/workouts', '/trackers']
+  const isMainPage = mainPages.includes(location.pathname)
+
+  // Telegram BackButton integration
+  useEffect(() => {
+    const tg = window.Telegram?.WebApp
+    if (!tg) return
+
+    const handleBack = () => {
+      navigate(-1)
+    }
+
+    if (isMainPage) {
+      tg.BackButton.hide()
+    } else {
+      tg.BackButton.show()
+      tg.BackButton.onClick(handleBack)
+    }
+
+    return () => {
+      tg.BackButton.offClick(handleBack)
+    }
+  }, [location.pathname, navigate, isMainPage])
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/'
