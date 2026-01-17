@@ -46,19 +46,19 @@ const DaysPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/50 to-transparent" />
         
-        <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="absolute bottom-0 left-0 right-0 p-4 pb-14">
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             <Calendar size={28} className="text-emerald-400" />
             Дни курса
           </h1>
-          <p className="text-emerald-200/70 text-sm">
+          <p className="text-emerald-200/70 text-sm mt-1">
             {completedDays.length} из 20 дней завершено
           </p>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="px-4 -mt-2 relative z-10 mb-4">
+      <div className="px-4 -mt-6 relative z-10 mb-6">
         <div className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-400">Общий прогресс</span>

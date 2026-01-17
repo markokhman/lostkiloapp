@@ -43,7 +43,7 @@ const HomePage = () => {
            <Dumbbell size={28} />
         </div>
         
-        <div className="absolute bottom-0 left-0 right-0 p-4 pb-8">
+        <div className="absolute bottom-0 left-0 right-0 p-4 pb-14">
           <h1 className="text-3xl font-bold text-white mb-1 drop-shadow-lg font-display">
             Total Detox
           </h1>
@@ -53,7 +53,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="px-4 -mt-4 relative z-10">
+      <div className="px-4 -mt-6 relative z-10">
         {/* Course Status Card */}
         {mode === 'not_started' ? (
           <div className="bg-gradient-to-br from-slate-800 to-slate-800/80 backdrop-blur-xl rounded-3xl p-6 mb-6 border border-slate-700/50 shadow-2xl">

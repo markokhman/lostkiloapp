@@ -58,20 +58,20 @@ const LeaderboardPage = () => {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         
-            <div className="relative px-4 pt-[calc(6rem+env(safe-area-inset-top,20px))] pb-6">
+            <div className="relative px-4 pt-[calc(6rem+env(safe-area-inset-top,20px))] pb-10">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-amber-500/20 rounded-2xl backdrop-blur-sm border border-amber-500/30 animate-bounce">
               <Trophy size={32} className="text-amber-400" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-white">Лидерборд</h1>
-              <p className="text-amber-200/70 text-sm">Участники курса</p>
+              <p className="text-amber-200/70 text-sm mt-1">Участники курса</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="px-4 -mt-2">
+      <div className="px-4">
         {/* Same Day Section */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">

@@ -64,19 +64,19 @@ const WorkoutsPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/50 to-transparent" />
         
-        <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="absolute bottom-0 left-0 right-0 p-4 pb-14">
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             <Dumbbell size={28} className="text-purple-400 animate-pulse" />
             Тренировки
           </h1>
-          <p className="text-purple-200/70 text-sm">
+          <p className="text-purple-200/70 text-sm mt-1">
             Упражнения, практики и процедуры
           </p>
         </div>
       </div>
 
       {/* Category Tabs */}
-      <div className="px-4 -mt-4 mb-4 overflow-x-auto hide-scrollbar relative z-10">
+      <div className="px-4 -mt-6 mb-6 overflow-x-auto hide-scrollbar relative z-10">
         <div className="flex gap-2 pb-2">
           {categories.map(({ id, label, Icon }) => (
             <button

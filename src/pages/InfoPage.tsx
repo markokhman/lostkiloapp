@@ -70,19 +70,19 @@ const InfoPage = () => {
       <div className="relative h-80 overflow-hidden mb-4">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-slate-900" />
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:16px_16px]" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 to-transparent">
-          <h1 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <div className="absolute bottom-0 left-0 right-0 p-6 pb-14 bg-gradient-to-t from-slate-900 to-transparent">
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             <Info size={28} className="text-blue-400" />
             Информация
           </h1>
-          <p className="text-blue-200/70 text-sm">
+          <p className="text-blue-200/70 text-sm mt-1">
             Полезные материалы, видео и рекомендации
           </p>
         </div>
       </div>
 
       {/* Category Tabs */}
-      <div className="px-4 -mt-4 mb-4 overflow-x-auto hide-scrollbar relative z-10">
+      <div className="px-4 -mt-6 mb-6 overflow-x-auto hide-scrollbar relative z-10">
         <div className="flex gap-2 pb-2">
           {categories.map(({ id, label, Icon }) => (
             <button
