@@ -1,62 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getRecipeImage, foodImages } from '../data/images'
-import { Utensils, Clock, Video, Ruler, Coffee, Salad, Citrus, ShoppingBag, ChefHat } from 'lucide-react'
-
-const breakfasts = [
-  { id: 'bowl', name: 'Боул (конструктор)', time: '15 мин' },
-  { id: 'omelet-caprese', name: 'Омлет капрезе', time: '10 мин' },
-  { id: 'coconut-porridge', name: 'Кокосовая каша', time: '15 мин' },
-  { id: 'cottage-cheese', name: 'Творог деревенский', time: '5 мин' },
-  { id: 'yogurt', name: 'Йогурт с мюсли', time: '5 мин' },
-  { id: 'syrniki', name: 'Сырники', time: '20 мин' },
-  { id: 'french-pancakes', name: 'Французские блины', time: '25 мин' },
-  { id: 'scramble', name: 'Скрэмбл с лососем', time: '10 мин' },
-  { id: 'flax-porridge', name: 'Льняная каша', time: '20 мин' }
-]
-
-const dinners = [
-  { id: 'frittata', name: 'Пикантная фриттата', time: '25 мин', video: true },
-  { id: 'cauliflower-pie', name: 'Пирог из цветной капусты', time: '40 мин', video: true },
-  { id: 'simple-cutlets', name: 'Простейшие котлеты', time: '35 мин', video: true },
-  { id: 'shawarma', name: 'Великолепная шаверма', time: '40 мин', video: true },
-  { id: 'shrimp-avocado-salad', name: 'Салат с креветками', time: '15 мин' },
-  { id: 'salmon-dor-blue', name: 'Лосось с дор блю', time: '30 мин' },
-  { id: 'salmon-quinoa-cutlets', name: 'Биточки из лосося', time: '35 мин' },
-  { id: 'squid-egg-salad', name: 'Салат с кальмаром', time: '20 мин' },
-  { id: 'salmon-tartare', name: 'Тартар из лосося', time: '15 мин', video: true },
-  { id: 'ceviche', name: 'Севиче', time: '70 мин', video: true },
-  { id: 'mussels-cream', name: 'Мидии в сливках', time: '20 мин', video: true },
-  { id: 'eggplant-burrata', name: 'Баклажан с бурратой', time: '20 мин', video: true },
-  { id: 'stuffed-chicken', name: 'Куриные грудки фарш.', time: '35 мин', video: true },
-  { id: 'duck-prunes', name: 'Утка с черносливом', time: '60 мин' }
-]
-
-const garnishes = [
-  { id: 'cabbage-salad', name: 'Салат из капусты', note: '200-250г' },
-  { id: 'fermented-vegetables', name: 'Квашеные овощи', note: 'до 100г' },
-  { id: 'fresh-salad', name: 'Свежий салат', note: '180-200г' }
-]
-
-const sauces = [
-  { id: 'balsamic', name: 'Оливки и бальзамик' },
-  { id: 'honey-mustard', name: 'Медово-горчичная' },
-  { id: 'pesto', name: 'Песто' },
-  { id: 'ranch', name: 'Ранч' },
-  { id: 'caesar', name: 'Цезарь' },
-  { id: 'tonnato', name: 'Вителло Тоннато' }
-]
-
-const extras = [
-  { id: 'smoothie-green-1', name: 'Смузи Green 1' },
-  { id: 'smoothie-green-2', name: 'Смузи Green 2' },
-  { id: 'flax-snacks', name: 'Льняные снэки' },
-  { id: 'paleo-bread', name: 'Палео-хлеб' },
-  { id: 'homemade-kefir', name: 'Домашний кефир' },
-  { id: 'quick-bread', name: 'Быстрый хлеб' }
-]
-
-type Category = 'breakfasts' | 'dinners' | 'garnishes' | 'sauces' | 'extras'
+import { recipes, recipesByCategory, recipeCategories, Category } from '../data/recipes'
+import { Utensils, Clock, Video, Ruler, ChefHat } from 'lucide-react'
 
 const RecipesPage = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('breakfasts')
@@ -66,22 +12,9 @@ const RecipesPage = () => {
     setImageErrors(prev => ({ ...prev, [id]: true }))
   }
 
-  const categories: { id: Category; label: string; Icon: any }[] = [
-    { id: 'breakfasts', label: 'Завтраки', Icon: Coffee },
-    { id: 'dinners', label: 'Ужины', Icon: Utensils },
-    { id: 'garnishes', label: 'Гарниры', Icon: Salad },
-    { id: 'sauces', label: 'Соусы', Icon: Citrus },
-    { id: 'extras', label: 'Прочее', Icon: ShoppingBag }
-  ]
-
   const getItems = () => {
-    switch (activeCategory) {
-      case 'breakfasts': return breakfasts
-      case 'dinners': return dinners
-      case 'garnishes': return garnishes
-      case 'sauces': return sauces
-      case 'extras': return extras
-    }
+    const ids = recipesByCategory[activeCategory]
+    return ids.map(id => recipes[id]).filter(Boolean)
   }
 
   return (
@@ -110,7 +43,7 @@ const RecipesPage = () => {
       {/* Category Tabs */}
       <div className="px-4 -mt-4 mb-4 overflow-x-auto hide-scrollbar relative z-10">
         <div className="flex gap-2 pb-2">
-          {categories.map(({ id, label, Icon }) => (
+          {recipeCategories.map(({ id, label, Icon }) => (
             <button
               key={id}
               onClick={() => setActiveCategory(id)}
@@ -133,7 +66,7 @@ const RecipesPage = () => {
           {getItems().map((item: any, idx: number) => {
             const imageUrl = getRecipeImage(item.id)
             const hasError = imageErrors[item.id]
-            const categoryConfig = categories.find(c => c.id === activeCategory)
+            const categoryConfig = recipeCategories.find(c => c.id === activeCategory)
             const CategoryIcon = categoryConfig?.Icon || Utensils
 
             return (
