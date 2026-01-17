@@ -17,9 +17,11 @@ import { TelegramContext, TelegramUser } from './context/TelegramContext'
 import { SettingsProvider } from './context/SettingsContext'
 import { CourseProvider } from './context/CourseContext'
 
+type TelegramWebApp = NonNullable<typeof window.Telegram>['WebApp']
+
 function App() {
   const [user, setUser] = useState<TelegramUser | null>(null)
-  const [webApp, setWebApp] = useState<typeof window.Telegram.WebApp | null>(null)
+  const [webApp, setWebApp] = useState<TelegramWebApp | null>(null)
   const [initData, setInitData] = useState<string | null>(null)
   const [isReady, setIsReady] = useState(false)
 
