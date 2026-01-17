@@ -39,7 +39,7 @@ html {
 }
 
 .safe-area-pt {
-  padding-top: max(env(safe-area-inset-top, 0px), 16px);
+  padding-top: max(env(safe-area-inset-top, 20px), 24px);
 }
 
 /* Custom scrollbar */
