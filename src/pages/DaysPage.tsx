@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useCourse } from '../context/CourseContext'
 import { activityImages, getDayImage } from '../data/images'
 import { getThumbnailUrl } from '../lib/supabase'
+import { Calendar, CheckCircle, Lock, ArrowRight, Target } from 'lucide-react'
 
 // Get thumbnail for each day from Supabase (video thumbnail or AI-generated image)
 const getDayThumbnail = (dayNumber: number): string => {
@@ -10,37 +11,6 @@ const getDayThumbnail = (dayNumber: number): string => {
   if (videoThumb) return videoThumb
   return getDayImage(dayNumber)
 }
-
-// SVG Icons
-const CalendarIcon = () => (
-  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-  </svg>
-)
-
-const CheckIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-  </svg>
-)
-
-const LockIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-  </svg>
-)
-
-const TargetIcon = () => (
-  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-)
-
-const ArrowRightIcon = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-  </svg>
-)
 
 const DaysPage = () => {
   const { progress } = useCourse()
@@ -78,7 +48,7 @@ const DaysPage = () => {
         
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <CalendarIcon />
+            <Calendar size={28} className="text-emerald-400" />
             Дни курса
           </h1>
           <p className="text-emerald-200/70 text-sm">
@@ -158,11 +128,11 @@ const DaysPage = () => {
                   <div className="absolute inset-0 flex items-center justify-center">
                     {day.isCompleted ? (
                       <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
-                        <CheckIcon className="w-5 h-5 text-white" />
+                        <CheckCircle size={20} className="text-white" />
                       </div>
                     ) : day.isLocked ? (
                       <div className="w-8 h-8 rounded-full bg-slate-600/80 flex items-center justify-center">
-                        <LockIcon className="w-4 h-4 text-slate-400" />
+                        <Lock size={16} className="text-slate-400" />
                       </div>
                     ) : (
                       <span className={`text-xl font-bold ${day.isCurrent ? 'text-emerald-300' : 'text-white'}`}>
@@ -196,14 +166,14 @@ const DaysPage = () => {
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-slate-700 flex items-center justify-center">
                 <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
-                  <CheckIcon className="w-4 h-4 text-white" />
+                  <CheckCircle size={14} className="text-white" />
                 </div>
               </div>
               <span className="text-sm text-slate-400">Завершён</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-slate-700 opacity-50 flex items-center justify-center">
-                <LockIcon className="w-4 h-4 text-slate-400" />
+                <Lock size={16} className="text-slate-400" />
               </div>
               <span className="text-sm text-slate-400">Заблокирован</span>
             </div>
@@ -218,10 +188,10 @@ const DaysPage = () => {
           className="flex items-center justify-between w-full p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl text-white font-medium hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20"
         >
           <span className="flex items-center gap-3">
-            <TargetIcon />
+            <Target size={20} />
             <span>Перейти к дню {currentDay}</span>
           </span>
-          <ArrowRightIcon />
+          <ArrowRight size={20} />
         </Link>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useCourse } from '../context/CourseContext'
 import { useSettings } from '../context/SettingsContext'
 import { useTelegram } from '../context/TelegramContext'
+import { BarChart2, Bell, Settings, Save, RotateCcw, Award, Scale, BookOpen } from 'lucide-react'
 
 const ProfilePage = () => {
   const { progress, setCoefficient, getCourseMode } = useCourse()
@@ -26,8 +27,8 @@ const ProfilePage = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-slate-700/50 to-slate-600/30 px-4 pt-6 pb-8">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-            {user?.firstName?.[0] || '👤'}
+          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+            {user?.firstName?.[0] || 'U'}
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">
@@ -42,8 +43,11 @@ const ProfilePage = () => {
 
       <div className="px-4 -mt-4 space-y-4">
         {/* Course Status */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
-          <h3 className="font-semibold text-white mb-3">📊 Статус курса</h3>
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 backdrop-blur-md">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <BarChart2 size={20} className="text-emerald-400" />
+            <span>Статус курса</span>
+          </h3>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-slate-700/50 rounded-lg p-3 text-center">
               <div className="text-2xl font-bold text-emerald-400">{progress.currentDay}</div>
@@ -55,24 +59,28 @@ const ProfilePage = () => {
             </div>
           </div>
           {progress.startDate && (
-            <div className="mt-3 text-sm text-slate-400 text-center">
-              Начало курса: {progress.startDate}
+            <div className="mt-3 text-sm text-slate-400 text-center flex items-center justify-center gap-2">
+               <span>Начало курса: {progress.startDate}</span>
             </div>
           )}
-          <div className={`mt-3 px-3 py-2 rounded-lg text-center text-sm font-medium ${
+          <div className={`mt-3 px-3 py-2 rounded-lg text-center text-sm font-medium flex items-center justify-center gap-2 ${
             mode === 'completed' ? 'bg-emerald-900/30 text-emerald-300' :
             mode === 'active' ? 'bg-blue-900/30 text-blue-300' :
             'bg-slate-700/50 text-slate-300'
           }`}>
-            {mode === 'completed' ? '🎉 Курс завершён!' :
-             mode === 'active' ? '🔥 Курс в процессе' :
-             '⏳ Курс не начат'}
+            <Award size={16} />
+            {mode === 'completed' ? 'Курс завершён!' :
+             mode === 'active' ? 'Курс в процессе' :
+             'Курс не начат'}
           </div>
         </div>
 
         {/* Coefficient */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
-          <h3 className="font-semibold text-white mb-2">📐 Коэффициент</h3>
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 backdrop-blur-md">
+          <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+            <Scale size={20} className="text-emerald-400" />
+            <span>Коэффициент</span>
+          </h3>
           <p className="text-sm text-slate-400 mb-4">
             Определяет размер порций белка. Текущий: <strong className="text-emerald-400">{progress.coefficient}</strong>
           </p>
@@ -84,7 +92,7 @@ const ProfilePage = () => {
                 onClick={() => setCoefficient(opt.value)}
                 className={`py-2 rounded-lg text-sm font-medium transition-all ${
                   progress.coefficient === opt.value
-                    ? 'bg-emerald-500 text-white'
+                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
                     : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -101,10 +109,13 @@ const ProfilePage = () => {
         </div>
 
         {/* Text Mode */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 backdrop-blur-md">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-white">📖 Текстовый режим</h3>
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <BookOpen size={20} className="text-emerald-400" />
+                <span>Текстовый режим</span>
+              </h3>
               <p className="text-sm text-slate-400 mt-1">
                 Показывать текст вместо видео
               </p>
@@ -123,8 +134,11 @@ const ProfilePage = () => {
         </div>
 
         {/* Notifications Settings (placeholder) */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
-          <h3 className="font-semibold text-white mb-3">🔔 Уведомления</h3>
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 backdrop-blur-md">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <Bell size={20} className="text-emerald-400" />
+            <span>Уведомления</span>
+          </h3>
           <div className="space-y-3">
             {[
               { id: 'morning', label: 'Утренние напоминания', time: '07:00' },
@@ -149,11 +163,15 @@ const ProfilePage = () => {
         </div>
 
         {/* Data & Reset */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
-          <h3 className="font-semibold text-white mb-3">💾 Данные</h3>
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 backdrop-blur-md">
+          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <Settings size={20} className="text-emerald-400" />
+            <span>Данные</span>
+          </h3>
           <div className="space-y-2">
-            <button className="w-full py-3 bg-blue-600/30 hover:bg-blue-600/50 rounded-lg text-blue-200 text-sm font-medium transition-all">
-              📤 Экспортировать прогресс
+            <button className="w-full py-3 bg-blue-600/30 hover:bg-blue-600/50 rounded-lg text-blue-200 text-sm font-medium transition-all flex items-center justify-center gap-2">
+              <Save size={18} />
+              <span>Экспортировать прогресс</span>
             </button>
             <button 
               onClick={() => {
@@ -162,15 +180,16 @@ const ProfilePage = () => {
                   window.location.reload()
                 }
               }}
-              className="w-full py-3 bg-red-600/30 hover:bg-red-600/50 rounded-lg text-red-200 text-sm font-medium transition-all"
+              className="w-full py-3 bg-red-600/30 hover:bg-red-600/50 rounded-lg text-red-200 text-sm font-medium transition-all flex items-center justify-center gap-2"
             >
-              🗑️ Сбросить прогресс
+              <RotateCcw size={18} />
+              <span>Сбросить прогресс</span>
             </button>
           </div>
         </div>
 
         {/* About */}
-        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 text-center">
+        <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 text-center backdrop-blur-md">
           <h3 className="font-semibold text-white mb-2">Total Detox</h3>
           <p className="text-sm text-slate-400">20-дневный курс трансформации</p>
           <p className="text-xs text-slate-500 mt-2">Версия 1.0.0</p>
