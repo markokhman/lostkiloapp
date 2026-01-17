@@ -510,7 +510,6 @@ const RecipeDetailPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
       <div className="bg-gradient-to-r from-orange-600/20 to-red-600/20 px-4 pt-6 pb-8 safe-area-pt">
-        <Link to="/recipes" className="text-slate-400 hover:text-white text-sm">← Рецепты</Link>
         <div className="flex items-center gap-3 mt-2">
           <span className="text-5xl">{recipe.emoji}</span>
           <div>

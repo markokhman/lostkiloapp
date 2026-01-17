@@ -236,11 +236,6 @@ const DayDetailPage = () => {
           ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20' 
           : 'bg-gradient-to-r from-emerald-600/20 to-teal-600/20'
       }`}>
-        <div className="flex items-center gap-2 mb-2">
-          <Link to="/days" className="text-slate-400 hover:text-white">
-            ← Назад
-          </Link>
-        </div>
         <h1 className="text-2xl font-bold text-white">{dayData.title}</h1>
         {dayData.subtitle && (
           <p className={`text-sm mt-1 ${dayData.isKefirDay ? 'text-blue-200/70' : 'text-emerald-200/70'}`}>
