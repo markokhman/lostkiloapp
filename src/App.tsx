@@ -30,6 +30,10 @@ function App() {
     if (tg) {
       tg.ready()
       tg.expand()
+      // Request fullscreen mode if available (Telegram 7.7+)
+      if ('requestFullscreen' in tg) {
+        (tg as any).requestFullscreen()
+      }
       tg.enableClosingConfirmation()
       
       setWebApp(tg)
