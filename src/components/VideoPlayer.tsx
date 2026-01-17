@@ -6,10 +6,11 @@ interface VideoPlayerProps {
   filename: string
   title?: string
   onClose?: () => void
+  autoPlay?: boolean  // Start in fullscreen mode immediately
 }
 
-const VideoPlayer = ({ filename, title, onClose }: VideoPlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false)
+const VideoPlayer = ({ filename, title, onClose, autoPlay = false }: VideoPlayerProps) => {
+  const [isPlaying, setIsPlaying] = useState(autoPlay)
   const [videoError, setVideoError] = useState(false)
   const [thumbError, setThumbError] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)

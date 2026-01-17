@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { useCourse } from '../context/CourseContext'
 import { useSettings } from '../context/SettingsContext'
 import VideoOrText from '../components/VideoOrText'
+import VideoPlayer from '../components/VideoPlayer'
 import { getTranscript } from '../data/transcripts'
+import { Play } from 'lucide-react'
 
 // Type definitions for meals
 interface KefirMeals {
@@ -203,6 +205,7 @@ const DayDetailPage = () => {
   const { progress, completeTask, isTaskCompleted, completeDay, logWater, logSteps } = useCourse()
   const { textMode } = useSettings()
   const [activeTab, setActiveTab] = useState<'tasks' | 'meals' | 'info'>('tasks')
+  const [showVideo, setShowVideo] = useState(false)
   
   const today = new Date().toISOString().split('T')[0]
   const todayWater = progress.waterIntake[today] || 0
@@ -243,6 +246,47 @@ const DayDetailPage = () => {
           </p>
         )}
       </div>
+
+      {/* Video Button */}
+      <div className="px-4 -mt-2 mb-4">
+        <button
+          onClick={() => setShowVideo(true)}
+          className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all active:scale-[0.98] ${
+            dayData.isKefirDay
+              ? 'bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-blue-500/40 hover:border-blue-400/60'
+              : 'bg-gradient-to-r from-emerald-600/30 to-teal-600/30 border-emerald-500/40 hover:border-emerald-400/60'
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+              dayData.isKefirDay
+                ? 'bg-blue-500/30'
+                : 'bg-emerald-500/30'
+            }`}>
+              <Play size={24} className={dayData.isKefirDay ? 'text-blue-300 fill-blue-300' : 'text-emerald-300 fill-emerald-300'} />
+            </div>
+            <div className="text-left">
+              <div className="text-white font-semibold">Видео дня {day}</div>
+              <div className={`text-sm ${dayData.isKefirDay ? 'text-blue-200/70' : 'text-emerald-200/70'}`}>
+                Смотреть инструкции
+              </div>
+            </div>
+          </div>
+          <div className={`text-sm font-medium ${dayData.isKefirDay ? 'text-blue-300' : 'text-emerald-300'}`}>
+            ▶
+          </div>
+        </button>
+      </div>
+
+      {/* Video Player Modal */}
+      {showVideo && (
+        <VideoPlayer
+          filename={dayData.videoFile}
+          title={`День ${day}`}
+          onClose={() => setShowVideo(false)}
+          autoPlay
+        />
+      )}
 
       {/* Shopping Reminder Banner */}
       {dayData.shoppingReminder && (
