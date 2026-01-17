@@ -16,6 +16,7 @@ import LeaderboardPage from './pages/LeaderboardPage'
 import { TelegramContext, TelegramUser } from './context/TelegramContext'
 import { SettingsProvider } from './context/SettingsContext'
 import { CourseProvider } from './context/CourseContext'
+import ScrollToTop from './components/ScrollToTop'
 
 type TelegramWebApp = NonNullable<typeof window.Telegram>['WebApp']
 
@@ -85,6 +86,7 @@ function App() {
     <TelegramContext.Provider value={{ user, webApp, isReady, initData }}>
       <SettingsProvider>
         <CourseProvider>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />

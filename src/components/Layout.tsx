@@ -49,20 +49,20 @@ const Layout = () => {
       <Outlet />
       
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 safe-area-pb">
-        <div className="flex justify-around items-center py-2">
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#1c1c1d]/90 backdrop-blur-md border-t border-[#38383a] safe-area-pb z-50">
+        <div className="flex justify-around items-center pt-2 pb-1">
           {navItems.map(({ path, Icon, label }) => (
             <Link
               key={path}
               to={path}
-              className={`flex flex-col items-center py-2 px-3 rounded-xl transition-all ${
+              className={`flex flex-col items-center py-1 px-1 transition-colors w-full ${
                 isActive(path)
                   ? 'text-emerald-500'
-                  : 'text-slate-500 hover:text-slate-400'
+                  : 'text-[#8e8e93]'
               }`}
             >
-              <Icon strokeWidth={isActive(path) ? 2.5 : 2} size={24} className="mb-1" />
-              <span className="text-[10px] font-medium leading-none">{label}</span>
+              <Icon strokeWidth={2} size={26} className="mb-0.5" />
+              <span className="text-[10px] font-medium leading-tight">{label}</span>
             </Link>
           ))}
         </div>

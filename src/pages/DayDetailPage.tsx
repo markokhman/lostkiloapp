@@ -231,7 +231,7 @@ const DayDetailPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-24">
       {/* Header */}
-      <div className={`px-4 pt-6 pb-8 safe-area-pt ${
+      <div className={`px-4 pt-12 pb-8 safe-area-pt ${
         dayData.isKefirDay 
           ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20' 
           : 'bg-gradient-to-r from-emerald-600/20 to-teal-600/20'

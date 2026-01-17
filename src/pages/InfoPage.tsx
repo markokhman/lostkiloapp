@@ -67,7 +67,7 @@ const InfoPage = () => {
   return (
     <div className="min-h-screen bg-slate-900 pb-24">
       {/* Header */}
-      <div className="relative h-52 overflow-hidden mb-4">
+      <div className="relative h-64 overflow-hidden mb-4">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-slate-900" />
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:16px_16px]" />
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 to-transparent">

@@ -19,7 +19,7 @@ const PreparationPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 px-4 pt-6 pb-8">
+      <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 px-4 pt-12 pb-8 safe-area-pt">
         <h1 className="text-2xl font-bold text-white mb-2">📋 Подготовка к курсу</h1>
         <p className="text-amber-200/70 text-sm">
           Выполните эти пункты до начала курса

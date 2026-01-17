@@ -37,7 +37,7 @@ const DaysPage = () => {
   return (
     <div className="min-h-screen bg-slate-900 pb-24">
       {/* Header */}
-      <div className="relative h-44 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         <img 
           src={activityImages.morning}
           alt="Course days"
