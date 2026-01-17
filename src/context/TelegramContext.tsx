@@ -18,7 +18,7 @@ interface TelegramContextType {
   initData: string | null
 }
 
-const TelegramContext = createContext<TelegramContextType>({
+export const TelegramContext = createContext<TelegramContextType>({
   user: null,
   webApp: null,
   isReady: false,
@@ -59,7 +59,7 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
       } else {
         console.log('No Telegram user found in initData')
         // For development outside Telegram
-        if (import.meta.env.DEV) {
+        if (process.env.NODE_ENV === 'development') {
           setUser({
             id: 123456789,
             firstName: 'Test',
@@ -79,7 +79,7 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
     } else {
       console.log('Telegram WebApp not available')
       // For development outside Telegram
-      if (import.meta.env.DEV) {
+      if (process.env.NODE_ENV === 'development') {
         setUser({
           id: 123456789,
           firstName: 'Test',
