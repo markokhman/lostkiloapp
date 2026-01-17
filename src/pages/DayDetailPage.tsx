@@ -5,6 +5,24 @@ import { useSettings } from '../context/SettingsContext'
 import VideoOrText from '../components/VideoOrText'
 import { getTranscript } from '../data/transcripts'
 
+// Type definitions for meals
+interface KefirMeals {
+  type: 'kefir'
+  preMeal: string
+  schedule: { time: string; item: string }[]
+}
+
+interface NormalMeals {
+  type: 'normal'
+  preMeal: string
+  lunch: { time: string; id: string | null; name: string; skippable: boolean } | null
+  dinner: { time: string; id: string; name: string } | null
+  garnish: string[]
+  snack: string[] | null
+}
+
+type Meals = KefirMeals | NormalMeals
+
 // Highlights for each day from course transcripts
 const dayHighlights: Record<number, string[]> = {
   1: [
@@ -137,8 +155,8 @@ const getDayData = (day: number) => {
         { id: `ex-${day}-4`, name: 'Домашний комплекс', note: 'по желанию' }
       ]
     },
-    meals: isKefirDay ? {
-      type: 'kefir',
+    meals: (isKefirDay ? {
+      type: 'kefir' as const,
       preMeal: 'Вода + яблочный уксус + лимон',
       schedule: [
         { time: '14:00', item: 'Кефир 500 мл' },
@@ -150,7 +168,7 @@ const getDayData = (day: number) => {
       const plan = mealPlanByDay[day]
       const hasLunch = plan && 'lunch' in plan
       return {
-        type: 'normal',
+        type: 'normal' as const,
         preMeal: 'Вода + 1-2 ст.л. яблочного уксуса + сок лимона',
         lunch: hasLunch ? {
           time: day >= 3 ? 'После 14:00' : '12:00 - 14:00',
@@ -166,7 +184,7 @@ const getDayData = (day: number) => {
         garnish: ['Квашеные овощи до 100г', 'Свежий салат 180-200г', 'ИЛИ салат из капусты 200-250г'],
         snack: day >= 3 ? ['200 мл кефира', '100г скира', '150г дыни'] : null
       }
-    })(),
+    })()) as Meals,
     evening: [
       { id: `eve-${day}-1`, text: 'Вечерняя прогулка', emoji: '🚶' },
       { id: `eve-${day}-2`, text: 'Дыхательные упражнения', emoji: '🌬️' },
@@ -471,20 +489,22 @@ const DayDetailPage = () => {
                   ))}
                 </div>
               </div>
-            ) : (
+            ) : (() => {
+              const normalMeals = dayData.meals as NormalMeals
+              return (
               <>
                 {/* Завтракобед */}
                 <div className="bg-orange-900/30 rounded-xl p-4 border border-orange-500/30">
                   <h3 className="font-semibold text-orange-300 mb-2">🍳 Завтракобед</h3>
-                  <p className="text-orange-200/70 text-sm mb-3">{dayData.meals.lunch?.time}</p>
-                  {dayData.meals.lunch?.id ? (
+                  <p className="text-orange-200/70 text-sm mb-3">{normalMeals.lunch?.time}</p>
+                  {normalMeals.lunch?.id ? (
                     <Link 
-                      to={`/recipes/${dayData.meals.lunch.id}`}
+                      to={`/recipes/${normalMeals.lunch.id}`}
                       className="block p-4 bg-gradient-to-r from-orange-600/20 to-amber-600/20 hover:from-orange-600/30 hover:to-amber-600/30 rounded-xl border border-orange-500/30 transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-white font-medium text-lg">{dayData.meals.lunch.name}</div>
+                          <div className="text-white font-medium text-lg">{normalMeals.lunch.name}</div>
                           <div className="text-orange-200/70 text-sm mt-1">Посмотреть рецепт →</div>
                         </div>
                         <span className="text-3xl">🍽️</span>
@@ -495,7 +515,7 @@ const DayDetailPage = () => {
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">💨</span>
                         <div>
-                          <div className="text-slate-300 font-medium">{dayData.meals.lunch?.name || 'Пропуск завтракобеда'}</div>
+                          <div className="text-slate-300 font-medium">{normalMeals.lunch?.name || 'Пропуск завтракобеда'}</div>
                           <div className="text-slate-400 text-sm">Можно пропустить с 5-го дня курса</div>
                         </div>
                       </div>
@@ -506,17 +526,17 @@ const DayDetailPage = () => {
                 {/* Ужин */}
                 <div className="bg-red-900/30 rounded-xl p-4 border border-red-500/30">
                   <h3 className="font-semibold text-red-300 mb-2">🥩 Ужин</h3>
-                  <p className="text-red-200/70 text-sm mb-3">{dayData.meals.dinner?.time}</p>
-                  {dayData.meals.dinner?.id && (
+                  <p className="text-red-200/70 text-sm mb-3">{normalMeals.dinner?.time}</p>
+                  {normalMeals.dinner?.id && (
                     <Link 
-                      to={dayData.meals.dinner.id === 'constructor' ? '/recipes' : `/recipes/${dayData.meals.dinner.id}`}
+                      to={normalMeals.dinner.id === 'constructor' ? '/recipes' : `/recipes/${normalMeals.dinner.id}`}
                       className="block p-4 bg-gradient-to-r from-red-600/20 to-rose-600/20 hover:from-red-600/30 hover:to-rose-600/30 rounded-xl border border-red-500/30 transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-white font-medium text-lg">{dayData.meals.dinner.name}</div>
+                          <div className="text-white font-medium text-lg">{normalMeals.dinner.name}</div>
                           <div className="text-red-200/70 text-sm mt-1">
-                            {dayData.meals.dinner.id === 'constructor' ? 'Собери свой ужин →' : 'Посмотреть рецепт →'}
+                            {normalMeals.dinner.id === 'constructor' ? 'Собери свой ужин →' : 'Посмотреть рецепт →'}
                           </div>
                         </div>
                         <span className="text-3xl">🍖</span>
@@ -529,25 +549,25 @@ const DayDetailPage = () => {
                 <div className="bg-green-900/30 rounded-xl p-4 border border-green-500/30">
                   <h3 className="font-semibold text-green-300 mb-2">🥗 Гарнир (обязательно)</h3>
                   <ul className="space-y-1">
-                    {dayData.meals.garnish?.map((item, idx) => (
+                    {normalMeals.garnish?.map((item, idx) => (
                       <li key={idx} className="text-green-200/70 text-sm">• {item}</li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Паёк */}
-                {dayData.meals.snack && (
+                {normalMeals.snack && (
                   <div className="bg-cyan-900/30 rounded-xl p-4 border border-cyan-500/30">
                     <h3 className="font-semibold text-cyan-300 mb-2">🍈 Паёк (опционально)</h3>
                     <ul className="space-y-1">
-                      {dayData.meals.snack.map((item, idx) => (
+                      {normalMeals.snack.map((item, idx) => (
                         <li key={idx} className="text-cyan-200/70 text-sm">• {item}</li>
                       ))}
                     </ul>
                   </div>
                 )}
               </>
-            )}
+            )})()}
           </div>
         )}
 
