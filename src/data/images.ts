@@ -1,4 +1,4 @@
-import { getDayImageUrl, getRecipeImageUrl, getWorkoutImageUrl } from '../lib/supabase'
+// import { getDayImageUrl, getRecipeImageUrl, getWorkoutImageUrl } from '../lib/supabase'
 
 // Fallback Image URLs using Unsplash for high-quality photos
 // These are used when AI-generated images are not available
@@ -122,22 +122,23 @@ const workoutFallbacks: Record<string, string> = {
 
 // Get recipe image - tries AI-generated first, falls back to Unsplash
 export const getRecipeImage = (recipeId: string): string => {
-  const aiImage = getRecipeImageUrl(recipeId)
-  if (aiImage) return aiImage
+  // AI images are not generated yet, using fallbacks
+  // const aiImage = getRecipeImageUrl(recipeId)
+  // if (aiImage) return aiImage
   return recipeFallbacks[recipeId] || foodImages.bowl
 }
 
 // Get workout image - tries AI-generated first, falls back to Unsplash
 export const getWorkoutImage = (workoutId: string): string => {
-  const aiImage = getWorkoutImageUrl(workoutId)
-  if (aiImage) return aiImage
+  // const aiImage = getWorkoutImageUrl(workoutId)
+  // if (aiImage) return aiImage
   return workoutFallbacks[workoutId] || activityImages.workout
 }
 
 // Get day image - tries AI-generated first, falls back to Unsplash
 export const getDayImage = (dayNumber: number): string => {
-  const aiImage = getDayImageUrl(dayNumber)
-  if (aiImage) return aiImage
+  // const aiImage = getDayImageUrl(dayNumber)
+  // if (aiImage) return aiImage
   // Fallback based on day theme
   if (dayNumber === 1) return lifestyleImages.morning
   if (dayNumber === 7 || dayNumber === 14 || dayNumber === 20) return lifestyleImages.success

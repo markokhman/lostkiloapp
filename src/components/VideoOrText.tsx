@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSettings } from '../context/SettingsContext'
 import VideoPlayer from './VideoPlayer'
+import { Video, AlignLeft, Play, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface VideoOrTextProps {
   videoFile?: string  // Filename like "День 1.MOV"
@@ -8,37 +9,6 @@ interface VideoOrTextProps {
   title: string
   showBothByDefault?: boolean  // Show both video and text
 }
-
-// SVG Icons
-const VideoIcon = () => (
-  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-  </svg>
-)
-
-const TextIcon = () => (
-  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
-)
-
-const PlayIcon = () => (
-  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M8 5v14l11-7z" />
-  </svg>
-)
-
-const ChevronDownIcon = () => (
-  <svg className="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-)
-
-const ChevronUpIcon = () => (
-  <svg className="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-  </svg>
-)
 
 const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: VideoOrTextProps) => {
   const { textMode } = useSettings()
@@ -60,7 +30,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
         <div className="bg-slate-800/80 rounded-xl overflow-hidden border border-slate-700/50">
           <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <VideoIcon />
+              <Video size={18} />
               {title}
             </h3>
             {text && (
@@ -71,7 +41,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
                 }}
                 className="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-1"
               >
-                <TextIcon />
+                <AlignLeft size={14} />
                 Только текст
               </button>
             )}
@@ -86,7 +56,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
         <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <TextIcon />
+              <AlignLeft size={18} />
               {!showVideo ? title : 'Текстовая версия'}
             </h3>
             {videoFile && !showVideo && (
@@ -96,7 +66,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
                 }}
                 className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
               >
-                <PlayIcon />
+                <Play size={14} fill="currentColor" />
                 Смотреть видео
               </button>
             )}
@@ -111,7 +81,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
               onClick={() => setShowFullText(!showFullText)}
               className="mt-3 text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1"
             >
-              {showFullText ? <><ChevronUpIcon /> Свернуть</> : <><ChevronDownIcon /> Читать полностью</>}
+              {showFullText ? <><ChevronUp size={16} /> Свернуть</> : <><ChevronDown size={16} /> Читать полностью</>}
             </button>
           )}
         </div>
@@ -127,7 +97,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
                 onClick={() => setShowVideo(true)}
                 className="flex-1 py-2 bg-emerald-600/30 hover:bg-emerald-600/50 rounded-lg text-emerald-200 text-sm font-medium transition-all flex items-center justify-center gap-2"
               >
-                <PlayIcon />
+                <Play size={16} fill="currentColor" />
                 Смотреть видео
               </button>
             )}
@@ -136,7 +106,7 @@ const VideoOrText = ({ videoFile, text, title, showBothByDefault = false }: Vide
                 onClick={() => setShowText(true)}
                 className="flex-1 py-2 bg-blue-600/30 hover:bg-blue-600/50 rounded-lg text-blue-200 text-sm font-medium transition-all flex items-center justify-center gap-2"
               >
-                <TextIcon />
+                <AlignLeft size={16} />
                 Читать текст
               </button>
             )}

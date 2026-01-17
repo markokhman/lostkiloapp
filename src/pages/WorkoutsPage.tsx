@@ -4,33 +4,34 @@ import { activityImages } from '../data/images'
 import VideoOrText from '../components/VideoOrText'
 import { getTranscript } from '../data/transcripts'
 import { getThumbnailUrl } from '../lib/supabase'
+import { Play, Dumbbell, Wind, Moon, Zap, Clock, Music, Video, ChevronDown, Activity, Footprints } from 'lucide-react'
 
 const workouts = {
   practices: [
-    { id: 'yoga', name: 'Йога практика', videoFile: 'Practice Yoga.MOV', duration: '20 мин', emoji: '🧘' },
-    { id: 'breathing', name: 'Дыхательные упражнения', videoFile: 'Дыхание.MOV', duration: '10 мин', emoji: '🌬️' },
-    { id: 'thai-1', name: 'Тайская практика 1', videoFile: 'Тайская практика 1.mp4', duration: '15 мин', emoji: '🙏' },
-    { id: 'thai-2', name: 'Вторая тайская практика', videoFile: 'вторая тайская.mp4', duration: '15 мин', emoji: '🙏' }
+    { id: 'yoga', name: 'Йога практика', videoFile: 'Practice Yoga.MOV', duration: '20 мин' },
+    { id: 'breathing', name: 'Дыхательные упражнения', videoFile: 'Дыхание.MOV', duration: '10 мин' },
+    { id: 'thai-1', name: 'Тайская практика 1', videoFile: 'Тайская практика 1.mp4', duration: '15 мин' },
+    { id: 'thai-2', name: 'Вторая тайская практика', videoFile: 'вторая тайская.mp4', duration: '15 мин' }
   ],
   workouts: [
-    { id: 'home-complex', name: 'Домашний комплекс', videoFile: 'Домашний комплекс.mp4', duration: '15 мин', emoji: '🏠' },
-    { id: 'plank', name: 'Планка', videoFile: 'Планка.mp4', duration: '5 мин', emoji: '🧱' },
-    { id: 'plank-advanced', name: 'Планка усложнённая', videoFile: 'планка усложненная.MOV', duration: '5 мин', emoji: '💪' },
-    { id: 'abs', name: 'Пресс', videoFile: 'Пресс.mp4', duration: '10 мин', emoji: '🔥' },
-    { id: 'core', name: 'Упражнения для кора', videoFile: 'кор.MOV', duration: '10 мин', emoji: '🎯' },
-    { id: 'tonus', name: 'Упражнения для тонуса', videoFile: 'тонус.MOV', duration: '10 мин', emoji: '✨' },
-    { id: 'squats', name: 'Приседания', videoFile: 'приседания.mp4', duration: '10 мин', emoji: '🦵' }
+    { id: 'home-complex', name: 'Домашний комплекс', videoFile: 'Домашний комплекс.mp4', duration: '15 мин' },
+    { id: 'plank', name: 'Планка', videoFile: 'Планка.mp4', duration: '5 мин' },
+    { id: 'plank-advanced', name: 'Планка усложнённая', videoFile: 'планка усложненная.MOV', duration: '5 мин' },
+    { id: 'abs', name: 'Пресс', videoFile: 'Пресс.mp4', duration: '10 мин' },
+    { id: 'core', name: 'Упражнения для кора', videoFile: 'кор.MOV', duration: '10 мин' },
+    { id: 'tonus', name: 'Упражнения для тонуса', videoFile: 'тонус.MOV', duration: '10 мин' },
+    { id: 'squats', name: 'Приседания', videoFile: 'приседания.mp4', duration: '10 мин' }
   ],
   cardio: [
-    { id: 'jump-rope', name: 'Скакалка', videoFile: 'Скакалка.mp4', duration: '15 мин', emoji: '⚡' },
-    { id: 'jump-rope-technique', name: 'Техника скакалки', videoFile: 'Скакалка Техника.mp4', duration: '5 мин', emoji: '📚' },
-    { id: 'dance-warmup', name: 'Разминка перед танцами', videoFile: 'Разминка перед танцами.mp4', duration: '10 мин', emoji: '💃' }
+    { id: 'jump-rope', name: 'Скакалка', videoFile: 'Скакалка.mp4', duration: '15 мин' },
+    { id: 'jump-rope-technique', name: 'Техника скакалки', videoFile: 'Скакалка Техника.mp4', duration: '5 мин' },
+    { id: 'dance-warmup', name: 'Разминка перед танцами', videoFile: 'Разминка перед танцами.mp4', duration: '10 мин' }
   ],
   procedures: [
-    { id: 'vacuum-massage', name: 'Вакуумный массаж', videoFile: 'вакуумный массаж.mp4', duration: '10 мин', emoji: '🌀' }
+    { id: 'vacuum-massage', name: 'Вакуумный массаж', videoFile: 'вакуумный массаж.mp4', duration: '10 мин' }
   ],
   sleep: [
-    { id: 'sleep-mantra', name: 'Мантра перед сном', videoFile: 'перед сном.mp3', duration: '15 мин', emoji: '🎶' }
+    { id: 'sleep-mantra', name: 'Мантра перед сном', videoFile: 'перед сном.mp3', duration: '15 мин' }
   ]
 }
 
@@ -41,12 +42,12 @@ const WorkoutsPage = () => {
   const [expandedItem, setExpandedItem] = useState<string | null>(null)
   const { textMode } = useSettings()
 
-  const categories: { id: Category; label: string; emoji: string }[] = [
-    { id: 'practices', label: 'Практики', emoji: '🧘' },
-    { id: 'workouts', label: 'Тренировки', emoji: '💪' },
-    { id: 'cardio', label: 'Кардио', emoji: '⚡' },
-    { id: 'procedures', label: 'Процедуры', emoji: '🌀' },
-    { id: 'sleep', label: 'Сон', emoji: '🌙' }
+  const categories: { id: Category; label: string; Icon: any }[] = [
+    { id: 'practices', label: 'Практики', Icon: Wind },
+    { id: 'workouts', label: 'Тренировки', Icon: Dumbbell },
+    { id: 'cardio', label: 'Кардио', Icon: Zap },
+    { id: 'procedures', label: 'Процедуры', Icon: Activity },
+    { id: 'sleep', label: 'Сон', Icon: Moon }
   ]
 
   const getItems = () => workouts[activeCategory]
@@ -63,13 +64,9 @@ const WorkoutsPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/50 to-transparent" />
         
-        {/* Floating elements */}
-        <div className="absolute top-4 right-4 text-4xl animate-bounce">💪</div>
-        <div className="absolute top-12 right-16 text-3xl animate-bounce" style={{ animationDelay: '0.5s' }}>🔥</div>
-        
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <span className="animate-pulse">🏋️</span>
+            <Dumbbell size={28} className="text-purple-400 animate-pulse" />
             Тренировки
           </h1>
           <p className="text-purple-200/70 text-sm">
@@ -81,18 +78,18 @@ const WorkoutsPage = () => {
       {/* Category Tabs */}
       <div className="px-4 -mt-4 mb-4 overflow-x-auto hide-scrollbar relative z-10">
         <div className="flex gap-2 pb-2">
-          {categories.map((cat) => (
+          {categories.map(({ id, label, Icon }) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              key={id}
+              onClick={() => setActiveCategory(id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all transform active:scale-95 ${
-                activeCategory === cat.id
+                activeCategory === id
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30'
                   : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
               }`}
             >
-              <span className="text-lg">{cat.emoji}</span>
-              <span className="text-sm font-medium">{cat.label}</span>
+              <Icon size={18} />
+              <span className="text-sm font-medium">{label}</span>
             </button>
           ))}
         </div>
@@ -119,49 +116,52 @@ const WorkoutsPage = () => {
               >
                 <div className="flex">
                   {/* Image - use Supabase thumbnail */}
-                  <div className="w-28 h-28 flex-shrink-0 relative overflow-hidden">
+                  <div className="w-28 h-28 flex-shrink-0 relative overflow-hidden bg-slate-900">
                     <img 
                       src={getThumbnailUrl(item.videoFile) || ''}
                       alt={item.name}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => {
-                        // Hide broken image and show emoji fallback
                         (e.target as HTMLImageElement).style.display = 'none'
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/40 to-pink-600/40 flex items-center justify-center">
-                      <span className="text-4xl">{item.emoji}</span>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <Play size={20} fill="currentColor" className="text-white ml-1" />
+                      </div>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-800/80" />
                   </div>
                   
                   {/* Content */}
                   <div className="flex-1 p-4 flex items-center">
                     <div className="flex-1 text-left">
-                      <h3 className="font-medium text-white group-hover:text-purple-300 transition-colors">
+                      <h3 className="font-medium text-white group-hover:text-purple-300 transition-colors line-clamp-2">
                         {item.name}
                       </h3>
-                      <div className="flex items-center gap-3 mt-1">
+                      <div className="flex items-center gap-3 mt-1.5">
                         <span className="text-xs text-slate-400 flex items-center gap-1">
-                          <span>⏱️</span> {item.duration}
+                          <Clock size={12} /> {item.duration}
                         </span>
                         {item.videoFile.endsWith('.mp3') ? (
-                          <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">🎵 Аудио</span>
+                          <span className="text-xs bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Music size={10} /> Аудио
+                          </span>
                         ) : (
-                          <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">📹 Видео</span>
+                          <span className="text-xs bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Video size={10} /> Видео
+                          </span>
                         )}
                       </div>
                     </div>
                     
                     {/* Expand/Collapse Button */}
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ml-2 ${
                       isExpanded 
-                        ? 'bg-purple-500 rotate-180' 
-                        : 'bg-gradient-to-br from-purple-500 to-pink-500'
+                        ? 'bg-purple-500 rotate-180 text-white' 
+                        : 'bg-slate-700/50 text-slate-400 group-hover:bg-purple-500/20 group-hover:text-purple-300'
                     }`}>
-                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                      <ChevronDown size={18} />
                     </div>
                   </div>
                 </div>
@@ -189,9 +189,8 @@ const WorkoutsPage = () => {
       {activeCategory === 'workouts' && (
         <div className="px-4 mt-6">
           <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900/40 to-teal-900/40 rounded-2xl p-5 border border-emerald-500/30">
-            <div className="absolute top-0 right-0 text-8xl opacity-10">🧱</div>
             <h3 className="font-semibold text-emerald-300 mb-4 flex items-center gap-2">
-              <span className="text-2xl animate-pulse">🧱</span>
+              <Activity size={20} />
               Прогрессия планки
             </h3>
             <div className="grid grid-cols-3 gap-3 text-center">
@@ -216,9 +215,8 @@ const WorkoutsPage = () => {
       {/* Steps Info */}
       <div className="px-4 mt-4">
         <div className="relative overflow-hidden bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-500/30 rounded-2xl p-4">
-          <div className="absolute top-0 right-0 text-6xl opacity-10">👟</div>
           <h3 className="font-semibold text-blue-300 mb-3 flex items-center gap-2">
-            <span className="text-xl">👟</span>
+            <Footprints size={20} />
             Не забывайте о шагах!
           </h3>
           <div className="space-y-2 text-sm">

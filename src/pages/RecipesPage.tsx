@@ -1,31 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getRecipeImage, foodImages } from '../data/images'
-
-// SVG Icons
-const CookingIcon = () => (
-  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-  </svg>
-)
-
-const ClockIcon = () => (
-  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-)
-
-const VideoIcon = () => (
-  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-  </svg>
-)
-
-const RulerIcon = () => (
-  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-  </svg>
-)
+import { Utensils, Clock, Video, Ruler, Coffee, Salad, Citrus, ShoppingBag, ChefHat } from 'lucide-react'
 
 const breakfasts = [
   { id: 'bowl', name: 'Боул (конструктор)', time: '15 мин' },
@@ -82,44 +58,20 @@ const extras = [
 
 type Category = 'breakfasts' | 'dinners' | 'garnishes' | 'sauces' | 'extras'
 
-// Category icons using SVG
-const categoryIcons: Record<Category, JSX.Element> = {
-  breakfasts: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-    </svg>
-  ),
-  dinners: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  ),
-  garnishes: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
-    </svg>
-  ),
-  sauces: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-    </svg>
-  ),
-  extras: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-    </svg>
-  )
-}
-
 const RecipesPage = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('breakfasts')
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({})
 
-  const categories: { id: Category; label: string }[] = [
-    { id: 'breakfasts', label: 'Завтраки' },
-    { id: 'dinners', label: 'Ужины' },
-    { id: 'garnishes', label: 'Гарниры' },
-    { id: 'sauces', label: 'Соусы' },
-    { id: 'extras', label: 'Прочее' }
+  const handleImageError = (id: string) => {
+    setImageErrors(prev => ({ ...prev, [id]: true }))
+  }
+
+  const categories: { id: Category; label: string; Icon: any }[] = [
+    { id: 'breakfasts', label: 'Завтраки', Icon: Coffee },
+    { id: 'dinners', label: 'Ужины', Icon: Utensils },
+    { id: 'garnishes', label: 'Гарниры', Icon: Salad },
+    { id: 'sauces', label: 'Соусы', Icon: Citrus },
+    { id: 'extras', label: 'Прочее', Icon: ShoppingBag }
   ]
 
   const getItems = () => {
@@ -146,7 +98,7 @@ const RecipesPage = () => {
         
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <CookingIcon />
+            <ChefHat size={28} className="text-orange-400" />
             Рецепты
           </h1>
           <p className="text-orange-200/70 text-sm">
@@ -158,18 +110,18 @@ const RecipesPage = () => {
       {/* Category Tabs */}
       <div className="px-4 -mt-4 mb-4 overflow-x-auto hide-scrollbar relative z-10">
         <div className="flex gap-2 pb-2">
-          {categories.map((cat) => (
+          {categories.map(({ id, label, Icon }) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              key={id}
+              onClick={() => setActiveCategory(id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all transform active:scale-95 ${
-                activeCategory === cat.id
+                activeCategory === id
                   ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg shadow-orange-500/30'
                   : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
               }`}
             >
-              {categoryIcons[cat.id]}
-              <span className="text-sm font-medium">{cat.label}</span>
+              <Icon size={18} />
+              <span className="text-sm font-medium">{label}</span>
             </button>
           ))}
         </div>
@@ -180,6 +132,10 @@ const RecipesPage = () => {
         <div className="grid grid-cols-2 gap-3">
           {getItems().map((item: any, idx: number) => {
             const imageUrl = getRecipeImage(item.id)
+            const hasError = imageErrors[item.id]
+            const categoryConfig = categories.find(c => c.id === activeCategory)
+            const CategoryIcon = categoryConfig?.Icon || Utensils
+
             return (
             <Link
               key={item.id}
@@ -188,24 +144,21 @@ const RecipesPage = () => {
               style={{ animationDelay: `${idx * 50}ms` }}
             >
               {/* Image or gradient background */}
-              {imageUrl ? (
+              {imageUrl && !hasError ? (
                 <div className="aspect-[4/3] relative">
                   <img 
                     src={imageUrl} 
                     alt={item.name}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={() => handleImageError(item.id)}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
                 </div>
               ) : (
-                <div className="aspect-[4/3] bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 relative">
-                  {/* Decorative pattern instead of emoji */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-4 left-4 w-8 h-8 border-2 border-orange-400/50 rounded-full" />
-                    <div className="absolute bottom-8 right-4 w-6 h-6 border-2 border-orange-400/50 rounded-lg rotate-45" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-orange-400/30 rounded-full" />
+                <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 relative flex items-center justify-center">
+                  <div className="bg-slate-700/50 p-4 rounded-full">
+                    <CategoryIcon size={32} className="text-slate-500" />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                 </div>
               )}
               
@@ -217,7 +170,7 @@ const RecipesPage = () => {
                     <div className="flex items-center gap-2 mt-1">
                       {item.time && (
                         <span className="text-xs text-orange-300/80 flex items-center gap-1">
-                          <ClockIcon />
+                          <Clock size={12} />
                           {item.time}
                         </span>
                       )}
@@ -228,7 +181,7 @@ const RecipesPage = () => {
                   </div>
                   {item.video && (
                     <span className="text-xs bg-orange-500/30 backdrop-blur-sm text-orange-200 px-2 py-1 rounded-lg flex items-center gap-1">
-                      <VideoIcon />
+                      <Video size={12} />
                     </span>
                   )}
                 </div>
@@ -242,14 +195,10 @@ const RecipesPage = () => {
         {activeCategory === 'dinners' && (
           <div className="mt-6 bg-gradient-to-br from-emerald-900/40 to-teal-900/40 rounded-2xl p-5 border border-emerald-500/30 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
-              <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
+               <Utensils size={128} />
             </div>
             <h3 className="font-semibold text-emerald-300 mb-4 flex items-center gap-2">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
+              <Utensils size={20} />
               Конструктор ужина
             </h3>
             <div className="space-y-4 text-sm relative">
@@ -275,7 +224,7 @@ const RecipesPage = () => {
         {/* Coefficient reminder */}
         <div className="mt-4 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 rounded-2xl p-4 flex items-center gap-4">
           <div className="text-blue-400">
-            <RulerIcon />
+            <Ruler size={24} />
           </div>
           <div>
             <h3 className="font-semibold text-blue-300">Коэффициент</h3>
