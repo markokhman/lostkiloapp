@@ -4,7 +4,7 @@ import { heroImages, foodImages, activityImages, avatarColors, lifestyleImages }
 import ProgressRing from '../components/ProgressRing'
 
 // Mock users on same day
-const getMockSameDayUsers = (day: number) => {
+const getMockSameDayUsers = (_day: number) => {
   const names = ['Анна', 'Мария', 'Елена', 'Ольга', 'Светлана']
   return names.slice(0, Math.floor(Math.random() * 4) + 2).map((name, idx) => ({
     name,

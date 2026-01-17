@@ -13,7 +13,6 @@ const preparationItems = [
 
 const PreparationPage = () => {
   const { progress, togglePreparationItem } = useCourse()
-  const completedCount = progress.preparationChecklist.length
   const totalRequired = preparationItems.filter(i => i.required).length
   const completedRequired = preparationItems.filter(i => i.required && progress.preparationChecklist.includes(i.id)).length
 
