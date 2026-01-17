@@ -19,6 +19,8 @@ import { CourseProvider } from './context/CourseContext'
 
 function App() {
   const [user, setUser] = useState<TelegramUser | null>(null)
+  const [webApp, setWebApp] = useState<typeof window.Telegram.WebApp | null>(null)
+  const [initData, setInitData] = useState<string | null>(null)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
@@ -27,6 +29,9 @@ function App() {
       tg.ready()
       tg.expand()
       tg.enableClosingConfirmation()
+      
+      setWebApp(tg)
+      setInitData((tg as any).initData || null)
       
       if (tg.initDataUnsafe?.user) {
         setUser({
@@ -65,7 +70,7 @@ function App() {
   }
 
   return (
-    <TelegramContext.Provider value={{ user }}>
+    <TelegramContext.Provider value={{ user, webApp, isReady, initData }}>
       <SettingsProvider>
         <CourseProvider>
           <Routes>
