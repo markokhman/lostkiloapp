@@ -53,7 +53,7 @@ const TrackersPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 px-4 pt-24 pb-8 safe-area-pt">
+      <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 px-4 pt-[calc(6rem+env(safe-area-inset-top,20px))] pb-8">
         <h1 className="text-2xl font-bold text-white mb-2">📊 Трекеры</h1>
         <p className="text-cyan-200/70 text-sm">
           Отслеживайте прогресс каждый день
